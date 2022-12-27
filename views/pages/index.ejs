@@ -11,8 +11,15 @@
 
 <main>
   <div class="jumbotron">
-    <h1>This is great</h1>
-    <p>Welcome to templating using EJS</p>
+    <h1>Betting App</h1>
+    <% if (locals.errorMessage) { %>
+        <p>Error: <%= errorMessage %></p>
+    <% } %>
+    <form action="/view_security" method="POST">
+        <label for="input_security">View security:</label>
+        <input type="text" id="input_security" name="input_security">
+        <input type="submit" value="OK">
+    </form>
   </div>
 </main>
 

@@ -1,0 +1,14 @@
+- user "login" (just do username, no password for now)
+- page to show user's positions
+- add new security (and this user will become admin of that one)
+- security type: future
+- security type: boolean (delta)
+- security type: option
+- let security have an underlying of an existing security or a "print" (just a value that isn't a traded security)
+- if underlying is a security, this derivative on that security needs to specify how it is settled (e.g. last traded price before deadline)
+- specify expiration date
+- if settles by print, the security's admin needs to input that value once security has expired
+- view order book
+- place limit order
+- matching engine
+- start players off with an amount of fake money 

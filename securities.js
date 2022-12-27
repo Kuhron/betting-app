@@ -8,7 +8,7 @@ const fp = "securities.json";
 function getSecurities() {
     var s = fs.readFileSync(fp);
     var d = JSON.parse(s);
-    var secParamsList = d["securities"];
+    var secParamsList = d.securities;
     var secs = [];
     for (var i = 0; i < secParamsList.length; i++) {
         var secParams = secParamsList[i];
@@ -19,10 +19,17 @@ function getSecurities() {
 }
 
 function writeSecurities(secs) {
-    var d = {"securities": secs};
+    var d = {securities: secs};
     fs.writeFileSync(d);
 }
 
+function symbolIsValid(symbol) {
+    return /^[A-Z0-9]+$/g.test(symbol);
+}
+
+module.exports = {
+    symbolIsValid
+};
 
 
 if (require.main === module) {
