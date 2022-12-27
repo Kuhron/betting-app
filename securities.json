@@ -1,0 +1,10 @@
+{
+    "securities": [{
+        "symbol": "ABC",
+        "password": "asdf"
+    }, {
+        "symbol": "XYZ",
+        "password": "aoeu"
+    }]
+}
+
