@@ -1,10 +1,10 @@
 {
     "securities": [{
         "symbol": "ABC",
-        "password": "asdf"
+        "password": "abc"
     }, {
         "symbol": "XYZ",
-        "password": "aoeu"
+        "password": "xyz"
     }]
 }
 

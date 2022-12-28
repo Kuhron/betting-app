@@ -27,8 +27,27 @@ function symbolIsValid(symbol) {
     return /^[A-Z0-9]+$/g.test(symbol);
 }
 
+function getSecurityFromSymbol(symbol) {
+    var secs = getSecurities();
+    var matchingSecs = [];
+    for (var i = 0; i < secs.length; i++) {
+        var sec = secs[i];
+        if (sec.symbol === symbol) {
+            matchingSecs.push(sec);
+        }
+    }
+    if (matchingSecs.length === 0) {
+        return null;
+    } else if (matchingSecs.length === 1) {
+        return matchingSecs[0];
+    } else {
+        throw new Error(`Multiple securities found with symbol ${symbol}. Please contact the site administrator.`);
+    }
+}
+
 module.exports = {
-    symbolIsValid
+    symbolIsValid,
+    getSecurityFromSymbol
 };
 
 

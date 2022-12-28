@@ -14,6 +14,35 @@
     <h1>Security Information</h1>
     <h2>Symbol: <%= symbol %></h2>
   </div>
+  <div id="securityType" name="securityType">
+    <p>Type of security: <%= locals.securityType ? securityType : 'Unknown' %></p>
+  </div>
+  <div name="lastPrice" name="lastPrice">
+    <!-- TODO if the price is 0 or whatever other numbers are falsy, will this ternary evaluate false? -->
+    <p>Last traded price: <%= locals.lastPrice ? lastPrice : 'Unknown' %></p>
+  </div>
+  <div name="orderBook" name="orderBook">
+    <h3>Current order book (up to <%= locals.nLevels ? nLevels : "Unknown" %> levels)</h3>
+    <% if (locals.orderBookLevels) { %>
+        <table>
+        <tr>
+            <th>Bids</th>
+            <th>Price</th>
+            <th>Offers</th>
+        </tr>
+        <% for (var level of orderBookLevels) { %>
+            <tr>
+                <td><%= (level.bids > 0) ? level.bids : '-' %></td>
+                <td><%= level.price %></td>
+                <td><%= (level.offers > 0) ? level.offers : '-' %></td>
+            </tr>
+        <% } %>
+        </table>
+    <% } else { %>
+        <p>There are no active orders.</p>
+    <% } %>
+
+  </div>
 </main>
 
 <footer>
