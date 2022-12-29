@@ -1,7 +1,7 @@
 const express = require('express');
 
-const securities = require('./securities');
-const orders = require('./orders');
+const { viewSecurity } = require('./server_interactions/viewSecurity');
+const { placeOrder } = require('./server_interactions/placeOrder');
 
 const router = express.Router();
 const app = express();
@@ -18,36 +18,8 @@ router.get('/', (req, res) => {
     res.render('pages/index', {});
 });
 
-router.post('/view_security', (req, res) => {
-    var symbol = req.body.input_security.toUpperCase();
-    var valid = securities.symbolIsValid(symbol);
-    if (valid) {
-        var sec = securities.getSecurityFromSymbol(symbol);
-        if (sec !== null) {
-            var securityType = sec.securityType;
-            var lastPrice = "TODO";
-            var ordersThisSymbol = orders.getOrdersFromSymbol(symbol);
-            var orderBookLevels = orders.getOrderBookLevelsFromOrders(ordersThisSymbol);
-            var nLevels = 3;
-            orderBookLevels = orders.getTopLevels(orderBookLevels, nLevels);
-            var params = {
-                symbol: symbol,
-                securityType: securityType,
-                lastPrice: lastPrice,
-                nLevels: nLevels,
-                orderBookLevels: orderBookLevels
-            };
-        } else {
-            var params = {
-                symbol: symbol
-            };
-        }
-        res.render('pages/security_information', params);
-    } else {
-        var params = { errorMessage: 'invalid symbol given, please try again' };
-        res.render('pages/index', params);
-    }
-});
+router.post('/view_security', viewSecurity);
+router.post('/place_order', placeOrder);
 
 app.use('/', router);
 

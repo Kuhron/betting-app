@@ -10,18 +10,23 @@
 </header>
 
 <main>
-  <div class="jumbotron">
+  <div id="orderStatus" name="orderStatus">
+    <% if (locals.orderStatusMessage) { %>
+      <p><%= orderStatusMessage %></p>
+    <% } %>
+  </div>
+  <div>
     <h1>Security Information</h1>
     <h2>Symbol: <%= symbol %></h2>
   </div>
   <div id="securityType" name="securityType">
     <p>Type of security: <%= locals.securityType ? securityType : 'Unknown' %></p>
   </div>
-  <div name="lastPrice" name="lastPrice">
+  <div id="lastPrice" name="lastPrice">
     <!-- TODO if the price is 0 or whatever other numbers are falsy, will this ternary evaluate false? -->
     <p>Last traded price: <%= locals.lastPrice ? lastPrice : 'Unknown' %></p>
   </div>
-  <div name="orderBook" name="orderBook">
+  <div id="orderBook" name="orderBook">
     <h3>Current order book (up to <%= locals.nLevels ? nLevels : "Unknown" %> levels)</h3>
     <% if (locals.orderBookLevels) { %>
         <table>
@@ -41,7 +46,17 @@
     <% } else { %>
         <p>There are no active orders.</p>
     <% } %>
-
+  </div>
+  <div id="placeOrder" name="placeOrder">
+    <form action="/place_order" method="POST">
+      <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>"</input> <!-- this is a hack to pass the symbol variable back to the server once the form makes the post request -->
+      <label for="order_price">Price:</label>
+      <input type="number" id="order_price" name="order_price"><br>
+      <label for="order_size">Size:</label>
+      <input type="number" id="order_size" name="order_size" min="1" max="9999"><br>
+      <input type="submit" id="buy_button" name="buy_button" value="Buy">
+      <input type="submit" id="sell_button" name="sell_button" value="Sell">
+    </form>
   </div>
 </main>
 

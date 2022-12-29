@@ -1,7 +1,8 @@
 const express = require('express');
 const fs = require('fs');
 
-const Security = require('./Security.js');
+const orders = require('./orders');
+const Security = require('./classes/Security.js');
 
 const fp = "securities.json";
 
@@ -20,7 +21,7 @@ function getSecurities() {
 
 function writeSecurities(secs) {
     var d = {securities: secs};
-    fs.writeFileSync(d);
+    fs.writeFileSync(fp, JSON.stringify(d));
 }
 
 function symbolIsValid(symbol) {
@@ -47,12 +48,11 @@ function getSecurityFromSymbol(symbol) {
 
 module.exports = {
     symbolIsValid,
-    getSecurityFromSymbol
+    getSecurityFromSymbol,
 };
 
 
 if (require.main === module) {
     var secs = getSecurities();
     console.log(secs);
-    var newSec = new Security
 }

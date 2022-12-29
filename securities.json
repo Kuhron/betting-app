@@ -1,10 +1,12 @@
 {
     "securities": [{
         "symbol": "ABC",
-        "password": "abc"
+        "password": "abc",
+        "securityType": "future"
     }, {
         "symbol": "XYZ",
-        "password": "xyz"
+        "password": "xyz",
+        "securityType": "future"
     }]
 }
 

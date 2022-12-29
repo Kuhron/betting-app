@@ -1,8 +1,8 @@
 const express = require('express');
 const fs = require('fs');
 
-const Order = require('./Order.js');
-const OrderBookLevel = require('./OrderBookLevel.js');
+const Order = require('./classes/Order.js');
+const OrderBookLevel = require('./classes/OrderBookLevel.js');
 
 const fp = "orders.json";
 
@@ -24,6 +24,11 @@ function getOrdersFromSymbol(symbol) {
         }
     }
     return orders;
+}
+
+function writeOrders(orders) {
+    var d = {orders: orders};
+    fs.writeFileSync(fp, JSON.stringify(d));
 }
 
 function getOrderBookLevelsFromOrders(orders) {
@@ -94,20 +99,19 @@ function getTopLevels(levels, n) {
             // as long as there aren't way too many of them 
             // slowing down the order book processing
         }
-        console.log("bidLevels: " + JSON.stringify(bidLevels));
-        console.log("askLevels: " + JSON.stringify(askLevels));
     }
     bidLevels.reverse();
     askLevels.reverse();
     var levels = askLevels.concat(bidLevels);
-    console.log("levels: " + JSON.stringify(levels));
     return levels;
 }
 
 module.exports = {
     getOrdersFromSymbol,
     getOrderBookLevelsFromOrders,
-    getTopLevels
+    getTopLevels,
+    writeOrders,
+    getAllOrders,
 };
 
 
