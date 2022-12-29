@@ -1,7 +1,7 @@
 const express = require('express');
 
-const { viewSecurity } = require('./server_interactions/viewSecurity');
-const { placeOrder } = require('./server_interactions/placeOrder');
+const { viewSecurity } = require('./server_interactions/viewSecurity.js');
+const { placeOrder } = require('./server_interactions/placeOrder.js');
 
 const router = express.Router();
 const app = express();

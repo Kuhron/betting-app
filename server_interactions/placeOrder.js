@@ -1,6 +1,7 @@
-const Order = require('../classes/Order');
-const { getAllOrders, writeOrders } = require("../orders");
-const { getViewSecurityParams } = require('./viewSecurity');
+const Order = require('../classes/Order.js');
+const { getOrdersFromSymbol, writeOrders } = require("../orders.js");
+const { getViewSecurityParams } = require('./viewSecurity.js');
+const { matchOrders } = require('../matchingEngine.js');
 
 function placeOrder(req, res) {
     var symbol = req.body.symbol.toUpperCase();
@@ -15,10 +16,17 @@ function placeOrder(req, res) {
     var sign = isBuy ? 1 : -1;
     var size = sign * absSize;
     var order = new Order(size, symbol, price);
-    var orders = getAllOrders();
-    orders.push(order);
-    writeOrders(orders);
+    var existingOrders = getOrdersFromSymbol(symbol);
+    var matchingResult = matchOrders(existingOrders, order);
+    var remainingOrders = matchingResult.remainingOrders;
+    console.log("matching result: " + JSON.stringify(matchingResult));
+    var trades = matchingResult.trades;
+    writeOrders(remainingOrders, symbol);
+
     var orderStatusMessage = "Order submitted.";
+    for (var trade of trades) {
+        orderStatusMessage += "\nTrade completed: " + trade.toString();
+    }
 
     var params = getViewSecurityParams(symbol);
     params.orderStatusMessage = orderStatusMessage;

@@ -1,32 +1,38 @@
 const express = require('express');
 const fs = require('fs');
 
+const filepaths = require('./filepaths.js')
+
 const Order = require('./classes/Order.js');
 const OrderBookLevel = require('./classes/OrderBookLevel.js');
 
-const fp = "orders.json";
-
-function getAllOrders() {
-    var symbol = null;
-    return getOrdersFromSymbol(symbol);
-}
 
 function getOrdersFromSymbol(symbol) {
     // if symbol is null, get all orders
+    const fp = filepaths.getOrdersFilepathForSecurity(symbol);
     var s = fs.readFileSync(fp);
     var orderParamsList = JSON.parse(s)["orders"];
     var orders = [];
     for (var i = 0; i < orderParamsList.length; i++) {
         var orderParams = orderParamsList[i];
         if ((symbol === null) || (orderParams.symbol === symbol)) {
-            var order = new Order(...Object.values(orderParams));
+            var size = parseInt(orderParams.size);
+            var symbol = orderParams.symbol;
+            var price = parseInt(orderParams.price);
+            var order = new Order(size, symbol, price);
             orders.push(order);
         }
     }
     return orders;
 }
 
-function writeOrders(orders) {
+function writeOrders(orders, symbol) {
+    var fp = filepaths.getOrdersFilepathForSecurity(symbol);
+    for (var order of orders) {
+        if (order.symbol !== symbol) {
+            throw new Error("got order with wrong symbol");
+        }
+    }
     var d = {orders: orders};
     fs.writeFileSync(fp, JSON.stringify(d));
 }
@@ -111,12 +117,10 @@ module.exports = {
     getOrderBookLevelsFromOrders,
     getTopLevels,
     writeOrders,
-    getAllOrders,
 };
 
 
 if (require.main === module) {
-    // var orders = getAllOrders();
     var orders = getOrdersFromSymbol("XYZ");
     console.log("orders: " + JSON.stringify(orders));
     var levels = getOrderBookLevelsFromOrders(orders);

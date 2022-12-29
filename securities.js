@@ -1,10 +1,10 @@
 const express = require('express');
 const fs = require('fs');
 
-const orders = require('./orders');
-const Security = require('./classes/Security.js');
+const filepaths = require('./filepaths.js');
+const fp = filepaths.getSecurityInfoFilepath();
 
-const fp = "securities.json";
+const Security = require('./classes/Security.js');
 
 function getSecurities() {
     var s = fs.readFileSync(fp);
@@ -13,7 +13,10 @@ function getSecurities() {
     var secs = [];
     for (var i = 0; i < secParamsList.length; i++) {
         var secParams = secParamsList[i];
-        var sec = new Security(...Object.values(secParams));
+        var symbol = secParams.symbol;
+        var password = secParams.password;
+        var securityType = secParams.securityType;
+        var sec = new Security(symbol, password, securityType);
         secs.push(sec);
     }
     return secs;
