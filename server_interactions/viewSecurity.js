@@ -1,5 +1,6 @@
 const { symbolIsValid, getSecurityFromSymbol } = require("../securities");
 const orders = require('../orders');
+const { getLastTradedPrice } = require("../trades");
 
 function viewSecurity(req, res) {
     var symbol = req.body.input_security.toUpperCase();
@@ -17,7 +18,7 @@ function getViewSecurityParams(symbol) {
     var sec = getSecurityFromSymbol(symbol);
     if (sec !== null) {
         var securityType = sec.securityType;
-        var lastPrice = "TODO";
+        var lastPrice = getLastTradedPrice(symbol);
         var ordersThisSymbol = orders.getOrdersFromSymbol(symbol);
         var orderBookLevels = orders.getOrderBookLevelsFromOrders(ordersThisSymbol);
         var nLevels = 3;

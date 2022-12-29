@@ -2,10 +2,21 @@ const express = require('express');
 const fs = require('fs');
 
 const filepaths = require('./filepaths.js')
+const { getAllSecurities } = require('./securities.js');
 
 const Order = require('./classes/Order.js');
 const OrderBookLevel = require('./classes/OrderBookLevel.js');
 
+
+function getAllOrders() {
+    var secs = getAllSecurities();
+    var orders = [];
+    for (var sec of secs) {
+        var ordersThisSec = getOrdersFromSymbol(sec.symbol);
+        orders = orders.concat(ordersThisSec);
+    }
+    return orders;
+}
 
 function getOrdersFromSymbol(symbol) {
     // if symbol is null, get all orders
@@ -17,9 +28,13 @@ function getOrdersFromSymbol(symbol) {
         var orderParams = orderParamsList[i];
         if ((symbol === null) || (orderParams.symbol === symbol)) {
             var size = parseInt(orderParams.size);
+            var originalSize = parseInt(orderParams.originalSize);
             var symbol = orderParams.symbol;
             var price = parseInt(orderParams.price);
-            var order = new Order(size, symbol, price);
+            var owner = orderParams.owner;
+            var orderNumber = parseInt(orderParams.orderNumber);
+            var timeReceived = orderParams.timeReceived;  // ISO 8601 string
+            var order = new Order(size, originalSize, symbol, price, owner, orderNumber, timeReceived);
             orders.push(order);
         }
     }
@@ -34,7 +49,7 @@ function writeOrders(orders, symbol) {
         }
     }
     var d = {orders: orders};
-    fs.writeFileSync(fp, JSON.stringify(d));
+    fs.writeFileSync(fp, JSON.stringify(d, null, 4));
 }
 
 function getOrderBookLevelsFromOrders(orders) {
@@ -112,11 +127,28 @@ function getTopLevels(levels, n) {
     return levels;
 }
 
+function getNextOrderNumber() {
+    var orders = getAllOrders();
+    return orders.length + 1;
+
+    // var maxOrderNumber = null;
+    // for (var order of orders) {
+    //     var num = order.orderNumber;
+    //     if (maxOrderNumber === null) {
+    //         maxOrderNumber = num;
+    //     } else {
+    //         maxOrderNumber = Math.max(maxOrderNumber, num);
+    //     }
+    // }
+    // return maxOrderNumber + 1;
+}
+
 module.exports = {
     getOrdersFromSymbol,
     getOrderBookLevelsFromOrders,
     getTopLevels,
     writeOrders,
+    getNextOrderNumber,
 };
 
 

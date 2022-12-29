@@ -1,10 +1,11 @@
 class Trade {
-    constructor(size, symbol, price, buyOrder, sellOrder) {
+    constructor(size, symbol, price, buyOrderNumber, sellOrderNumber, timeTraded) {
         this.size = size;
         this.symbol = symbol;
         this.price = price;
-        this.buyOrder = buyOrder;
-        this.sellOrder = sellOrder;
+        this.buyOrderNumber = buyOrderNumber;
+        this.sellOrderNumber = sellOrderNumber;
+        this.timeTraded = timeTraded;
     }
 
     toString() {

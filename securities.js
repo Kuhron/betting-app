@@ -6,7 +6,7 @@ const fp = filepaths.getSecurityInfoFilepath();
 
 const Security = require('./classes/Security.js');
 
-function getSecurities() {
+function getAllSecurities() {
     var s = fs.readFileSync(fp);
     var d = JSON.parse(s);
     var secParamsList = d.securities;
@@ -24,7 +24,7 @@ function getSecurities() {
 
 function writeSecurities(secs) {
     var d = {securities: secs};
-    fs.writeFileSync(fp, JSON.stringify(d));
+    fs.writeFileSync(fp, JSON.stringify(d, null, 4));
 }
 
 function symbolIsValid(symbol) {
@@ -32,7 +32,7 @@ function symbolIsValid(symbol) {
 }
 
 function getSecurityFromSymbol(symbol) {
-    var secs = getSecurities();
+    var secs = getAllSecurities();
     var matchingSecs = [];
     for (var i = 0; i < secs.length; i++) {
         var sec = secs[i];
@@ -50,12 +50,13 @@ function getSecurityFromSymbol(symbol) {
 }
 
 module.exports = {
+    getAllSecurities,
     symbolIsValid,
     getSecurityFromSymbol,
 };
 
 
 if (require.main === module) {
-    var secs = getSecurities();
+    var secs = getAllSecurities();
     console.log(secs);
 }

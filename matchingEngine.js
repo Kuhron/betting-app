@@ -2,13 +2,11 @@ const Trade = require('./classes/Trade.js');
 
 
 function matchOrders(existingOrders, newOrder) {
-    console.log("newOrder: " + JSON.stringify(newOrder));
-
+    console.log("aggressive order: " + JSON.stringify(newOrder));
     var symbol = newOrder.symbol;
     var eligibility = getOrdersEligibleForMatching(existingOrders, newOrder);
     var eligibleOrders = eligibility.eligibleOrders;
     var ineligibleOrders = eligibility.ineligibleOrders;
-    console.log("eligibility: " + JSON.stringify(eligibility));
 
     // now have eligible orders, so we can prioritize them
     // if incoming order is buy, prioritize lowest selling price; if sell, highest buying price
@@ -19,39 +17,29 @@ function matchOrders(existingOrders, newOrder) {
 
     var remainingOrders = ineligibleOrders.slice();  // copy the array
     var trades = [];
-    var absSizeAggressive = newOrder.getAbsSize();
-    for (var i = 0; i < eligibleOrders.length; i++) {
-        var passiveOrder = eligibleOrders[i];
-        var absSizePassive = passiveOrder.getAbsSize();
-        var amountTraded = Math.min(absSizePassive, absSizeAggressive);
-        var priceTraded = passiveOrder.price;  // passive order's price is used so incoming order gets best price
-        var buyOrder = incomingIsBuy ? newOrder : passiveOrder;
-        var sellOrder = incomingIsBuy ? passiveOrder : newOrder;
-        var trade = new Trade(amountTraded, symbol, priceTraded, buyOrder, sellOrder);
-        trades.push(trade);
-
-        passiveOrder.tradeSize(amountTraded);
-        newOrder.tradeSize(amountTraded);
-
-        if (newOrder.isTradedOut()) {
-            // no more matching to be done
-            // check if the passive order still has size left
-            var passiveSizeLeft = passiveOrder.getAbsSize();
-            if (passiveSizeLeft > 0) {
-                remainingOrders.push(passiveOrder);
-            }
-            // all remaining orders with size go in the remaining orders list
-            for (var j = i+1; j < eligibleOrders.length; j++) {
-                remainingOrders.push(eligibleOrders[j]);
-            }
-            break;
+    for (var passiveOrder of eligibleOrders) {
+        if (!newOrder.isTradedOut()) {
+            console.log("passive order: " + JSON.stringify(passiveOrder));
+            var absSizeAggressive = newOrder.getAbsSize();
+            var absSizePassive = passiveOrder.getAbsSize();
+            var amountTraded = Math.min(absSizePassive, absSizeAggressive);
+            console.log(`order ${newOrder.orderNumber} trading against passive order ${passiveOrder.orderNumber} for size ${amountTraded}`);
+            var priceTraded = passiveOrder.price;  // passive order's price is used so incoming order gets best price
+            var buyOrder = incomingIsBuy ? newOrder : passiveOrder;
+            var sellOrder = incomingIsBuy ? passiveOrder : newOrder;
+            var buyOrderNumber = buyOrder.orderNumber;
+            var sellOrderNumber = sellOrder.orderNumber;
+            var timeTraded = new Date().toISOString();
+            var trade = new Trade(amountTraded, symbol, priceTraded, buyOrderNumber, sellOrderNumber, timeTraded);
+            trades.push(trade);
+            passiveOrder.tradeSize(amountTraded);
+            newOrder.tradeSize(amountTraded);
         }
+        remainingOrders.push(passiveOrder);  // do this no matter what, keep a record of the orders
     }
 
-    // if any remains of this order, add it to the book
-    if (!newOrder.isTradedOut()) {
-        remainingOrders.push(newOrder);
-    }
+    // place the new order in the json no matter what so we have a record of it
+    remainingOrders.push(newOrder);
 
     var matchingResult = {
         remainingOrders: remainingOrders,
@@ -91,9 +79,9 @@ function getOrdersEligibleForMatching(existingOrders, newOrder) {
         }
         var priceIsEligible = incomingIsBuy ? (order.price <= newOrder.price) : (order.price >= newOrder.price);
         var sideIsEligible = incomingIsBuy ? (order.getDirection() === -1) : (order.getDirection() === 1);
-        var orderIsEligible = priceIsEligible && sideIsEligible;
+        var sizeIsEligible = order.getAbsSize() > 0;
+        var orderIsEligible = priceIsEligible && sideIsEligible && sizeIsEligible;
         if (orderIsEligible) {
-            console.log("adding eligible order: " + JSON.stringify(order));
             eligibleOrders.push(order);
         } else {
             ineligibleOrders.push(order);

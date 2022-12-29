@@ -1,5 +1,8 @@
-- order needs owner, orderNumber, timeReceived
-- make separate folder for each security where you keep the orders and trades and stuff that is only about that security and no others (keep securities.json in the top level though), this way we don't have to read order lists that are irrelevant
+- list security symbols on front page, user can click to be taken to that security's page
+- cancel passive order if self-match
+- cancel order
+- edit order (will cancel and submit a new one)
+- view my active orders
 
 - user "login" (just do username, no password for now)
 - page to show user's positions

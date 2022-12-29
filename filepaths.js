@@ -28,6 +28,14 @@ function getOrdersFilepathForSecurity(symbol) {
     return fp;
 }
 
+function getTradesFilepathForSecurity(symbol) {
+    var fname = "trades.json";
+    var dirname = getDirForSecurity(symbol);
+    var fp = path.join(dirname, fname);
+    createFileIfNotExists(fp, "{\"trades\": []}");
+    return fp;
+}
+
 function getSecurityInfoFilepath() {
     const securityDataDir = getSecurityDataDir();
     var fname = "securities.json";
@@ -54,4 +62,5 @@ module.exports = {
     getDirForSecurity,
     getOrdersFilepathForSecurity,
     getSecurityInfoFilepath,
+    getTradesFilepathForSecurity,
 };

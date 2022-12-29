@@ -1,0 +1,36 @@
+{
+    "trades": [
+        {
+            "size": 30,
+            "symbol": "XYZ",
+            "price": 20,
+            "buyOrderNumber": 5,
+            "sellOrderNumber": 3,
+            "timeTraded": "2022-12-29T19:30:01.077Z"
+        },
+        {
+            "size": 50,
+            "symbol": "XYZ",
+            "price": 21,
+            "buyOrderNumber": 10,
+            "sellOrderNumber": 2,
+            "timeTraded": "2022-12-29T19:31:51.373Z"
+        },
+        {
+            "size": 60,
+            "symbol": "XYZ",
+            "price": 22,
+            "buyOrderNumber": 10,
+            "sellOrderNumber": 6,
+            "timeTraded": "2022-12-29T19:31:51.374Z"
+        },
+        {
+            "size": 80,
+            "symbol": "XYZ",
+            "price": 23,
+            "buyOrderNumber": 10,
+            "sellOrderNumber": 9,
+            "timeTraded": "2022-12-29T19:31:51.376Z"
+        }
+    ]
+}

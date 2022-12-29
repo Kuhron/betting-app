@@ -11,8 +11,10 @@
 
 <main>
   <div id="orderStatus" name="orderStatus">
-    <% if (locals.orderStatusMessage) { %>
-      <p><%= orderStatusMessage %></p>
+    <% if (locals.orderStatusMessages) { %>
+      <% for (var message of orderStatusMessages) { %>
+        <p><%= message %></p>
+      <% } %>
     <% } %>
   </div>
   <div>
@@ -49,7 +51,9 @@
   </div>
   <div id="placeOrder" name="placeOrder">
     <form action="/place_order" method="POST">
-      <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>"</input> <!-- this is a hack to pass the symbol variable back to the server once the form makes the post request -->
+      <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>"> <!-- this is a hack to pass the symbol variable back to the server once the form makes the post request -->
+      <label for="owner">Username:</label>
+      <input type="text" id="owner" name="owner" value="<%= locals.username ? username : 'Unknown' %>"><br>
       <label for="order_price">Price:</label>
       <input type="number" id="order_price" name="order_price"><br>
       <label for="order_size">Size:</label>
