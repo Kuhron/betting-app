@@ -2,6 +2,12 @@ const Security = require("../classes/Security");
 const { writeNewSecurity, symbolIsValid } = require("../securities");
 const { getViewSecurityParams } = require("./viewSecurity");
 
+
+
+function viewCreateSecurityPageBlank(req, res) {
+    res.render('pages/create_security', {});
+}
+
 function createSecurity(req, res) {
     var symbol = req.body.symbol.toUpperCase();
     var valid = symbolIsValid(symbol);
@@ -21,5 +27,6 @@ function createSecurity(req, res) {
 }
 
 module.exports = {
+    viewCreateSecurityPageBlank,
     createSecurity,
 }

@@ -13,12 +13,15 @@
   <div class="jumbotron">
     <h1>Betting App</h1>
     <% if (locals.errorMessage) { %>
-        <p>Error: <%= errorMessage %></p>
+      <p>Error: <%= errorMessage %></p>
     <% } %>
     <form action="/view_security" method="POST">
-        <label for="input_security">View security:</label>
-        <input type="text" id="input_security" name="input_security">
-        <input type="submit" value="OK">
+      <label for="input_security">View security:</label>
+      <input type="text" id="input_security" name="input_security">
+      <input type="submit" value="OK">
+    </form>
+    <form action="/view_create_security_page" method="GET">
+      <input type="submit" value="Create new security">
     </form>
   </div>
 </main>

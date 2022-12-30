@@ -25,10 +25,12 @@ function placeOrder(req, res) {
         createUserIfNotExists(owner);
         var orderNumber = getNextOrderNumber();
         var timeReceived = new Date().toISOString();
-        var order = new Order(size, originalSize, symbol, price, owner, orderNumber, timeReceived);
+        var status = "active";
+        var order = new Order(size, originalSize, symbol, price, owner, orderNumber, timeReceived, status);
         var existingOrders = getOrdersFromSymbol(symbol);
         var matchingResult = matchOrders(existingOrders, order);
         var remainingOrders = matchingResult.remainingOrders;
+        var cancelledOrders = matchingResult.cancelledOrders;
         var trades = matchingResult.trades;
         writeOrders(remainingOrders, symbol);
         appendTrades(trades, symbol);
@@ -37,6 +39,10 @@ function placeOrder(req, res) {
         var orderStatusMessages = ["Order submitted."];
         for (var trade of trades) {
             var message = "Trade completed: " + trade.toString();
+            orderStatusMessages.push(message);
+        }
+        for (var order of cancelledOrders) {
+            var message = "Order cancelled: " + order.toString();
             orderStatusMessages.push(message);
         }
     }

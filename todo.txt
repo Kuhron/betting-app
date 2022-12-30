@@ -1,13 +1,13 @@
 - list security symbols on front page, user can click to be taken to that security's page
-- page to create a new security if you search for one that doesn't exist
-- button on front page to create new security
-- cancel passive order if self-match
 - cancel active order
 - edit order (will cancel and submit a new one)
-- view my active orders
+- page to view my active orders
+- columns to view my active orders in the order book
+- buttons to click trade in the order book gui
+-- set lot size e.g. directly to 1, 5, 10, or up/down like +/-1, +/-10, +/-100
+-- click bids/offers to place order there
 
-- page to show user's positions
-- add new security (and this user will set its admin password, and then anyone knowing that password can do admin stuff like settle the security, halt trading, etc.)
+- security admin actions: halt trading, settle/expire
 - security type: boolean (delta)
 - security type: option
 - let security have an underlying of an existing security or a "print" (just a value that isn't a traded security)

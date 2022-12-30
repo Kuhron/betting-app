@@ -34,6 +34,7 @@ function writeNewSecurity(sec) {
 }
 
 function symbolIsValid(symbol) {
+    if (symbol.length === 0) return false;
     return /^[A-Z0-9]+$/g.test(symbol);
 }
 

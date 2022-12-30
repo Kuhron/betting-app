@@ -47,6 +47,9 @@ function getAccountFromParams(params) {
 
 function getAccountFromOwner(username) {
     var user = getUserFromUsername(username);
+    if (user === null) {
+        return null;
+    }
     return user.account;
 }
 
@@ -82,6 +85,7 @@ function writeNewUser(user) {
 }
 
 function usernameIsValid(username) {
+    if (username.length === 0) return false;
     return /^[A-Za-z0-9_.]+$/g.test(username);
 }
 

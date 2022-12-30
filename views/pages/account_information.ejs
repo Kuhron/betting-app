@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+  <div>
+    <% if (locals.username) { %>
+      <h1>Account information for <%= username %></h1>
+    <% } else { %>
+      <h1>Account information</h1>
+    <% } %>
+  </div>
+  <div id="errorMessage" name="errorMessage">
+    <% if (locals.errorMessage) { %>
+      <p><%= errorMessage %></p>
+    <% } %>
+  </div>
+  <div>
+    <form action='/update_username_on_account_page' method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<%= locals.username ? username : '' %>"><br>
+        <input type="submit" value="Update username">
+    </form>
+  </div>
+  <% if (locals.username) { %>
+    <div>
+      <p>Cash balance: <%= locals.cashBalance !== null ? cashBalance : 'Unknown' %></p>
+      <% if (locals.positions && Object.keys(positions).length > 0) { %>
+        <% for (var symbol in positions) { %>
+          <p><%= symbol %>: <%= positions[symbol] %></p>
+        <% } %>
+      <% } else { %>
+        <p>No positions held.</p>
+      <% } %>
+    </div>
+  <% } %>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

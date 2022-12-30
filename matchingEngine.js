@@ -1,12 +1,16 @@
 const Trade = require('./classes/Trade.js');
+const { cancelOrders } = require('./orders.js');
 
 
 function matchOrders(existingOrders, newOrder) {
-    console.log("aggressive order: " + JSON.stringify(newOrder));
+    // console.log("aggressive order: " + JSON.stringify(newOrder));
     var symbol = newOrder.symbol;
     var eligibility = getOrdersEligibleForMatching(existingOrders, newOrder);
     var eligibleOrders = eligibility.eligibleOrders;
     var ineligibleOrders = eligibility.ineligibleOrders;
+    var ordersToCancel = eligibility.ordersToCancel;
+
+    cancelOrders(ordersToCancel);
 
     // now have eligible orders, so we can prioritize them
     // if incoming order is buy, prioritize lowest selling price; if sell, highest buying price
@@ -15,11 +19,11 @@ function matchOrders(existingOrders, newOrder) {
     var compareFunc = incomingIsBuy ? compareSellOrders : compareBuyOrders;
     eligibleOrders = eligibleOrders.sort(compareFunc);
 
-    var remainingOrders = ineligibleOrders.slice();  // copy the array
+    var remainingOrders = ineligibleOrders.concat(ordersToCancel);
     var trades = [];
     for (var passiveOrder of eligibleOrders) {
         if (!newOrder.isTradedOut()) {
-            console.log("passive order: " + JSON.stringify(passiveOrder));
+            // console.log("passive order: " + JSON.stringify(passiveOrder));
             var amountAggressive = newOrder.getAmount();
             var amountPassive = passiveOrder.getAmount();
             var amountTraded = Math.min(amountPassive, amountAggressive);
@@ -34,6 +38,12 @@ function matchOrders(existingOrders, newOrder) {
             trades.push(trade);
             passiveOrder.tradeSize(amountTraded);
             newOrder.tradeSize(amountTraded);
+            if (passiveOrder.isTradedOut()) {
+                passiveOrder.markCompleted();
+            }
+            if (newOrder.isTradedOut()) {
+                newOrder.markCompleted();
+            }
         }
         remainingOrders.push(passiveOrder);  // do this no matter what, keep a record of the orders
     }
@@ -43,6 +53,7 @@ function matchOrders(existingOrders, newOrder) {
 
     var matchingResult = {
         remainingOrders: remainingOrders,
+        cancelledOrders: ordersToCancel,
         trades: trades,
     }
     return matchingResult;
@@ -72,6 +83,7 @@ function getOrdersEligibleForMatching(existingOrders, newOrder) {
     // if the incoming order is a buy, prices should be <= its price, if sell then >=
     var eligibleOrders = [];
     var ineligibleOrders = [];
+    var ordersToCancel = [];  // auto-cancel any self-matching orders on the level
     incomingIsBuy = newOrder.getDirection() === 1;
     for (var order of existingOrders) {
         if (order.symbol !== newOrder.symbol) {
@@ -79,9 +91,13 @@ function getOrdersEligibleForMatching(existingOrders, newOrder) {
         }
         var priceIsEligible = incomingIsBuy ? (order.price <= newOrder.price) : (order.price >= newOrder.price);
         var sideIsEligible = incomingIsBuy ? (order.getDirection() === -1) : (order.getDirection() === 1);
-        var sizeIsEligible = order.getAmount() > 0;
-        var orderIsEligible = priceIsEligible && sideIsEligible && sizeIsEligible;
-        if (orderIsEligible) {
+        var statusIsEligible = order.status === "active";
+        var isSameOwner = order.owner === newOrder.owner;
+        var isSelfMatch = priceIsEligible && sideIsEligible && statusIsEligible && isSameOwner;
+        var orderIsEligible = !isSelfMatch && priceIsEligible && sideIsEligible && statusIsEligible;
+        if (isSelfMatch) {
+            ordersToCancel.push(order);
+        } else if (orderIsEligible) {
             eligibleOrders.push(order);
         } else {
             ineligibleOrders.push(order);
@@ -90,6 +106,7 @@ function getOrdersEligibleForMatching(existingOrders, newOrder) {
     return {
         eligibleOrders: eligibleOrders,
         ineligibleOrders: ineligibleOrders,
+        ordersToCancel: ordersToCancel,
     }
 }
 

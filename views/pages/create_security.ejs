@@ -14,7 +14,7 @@
     <h1>Create new security</h1>
     <form action="/create_security" method="POST">
       <label for="symbol">Symbol:</label>
-      <input type="text" id="symbol" name="symbol"><br>
+      <input type="text" id="symbol" name="symbol" value="<%= locals.symbol ? symbol : '' %>"><br>
       <select id="securityType" name="securityType">
         <option value="Future">Future</option>
         <option value="Boolean">Boolean</option>

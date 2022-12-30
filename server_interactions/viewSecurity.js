@@ -15,7 +15,7 @@ function viewSecurity(req, res) {
     var sec = getSecurityFromSymbol(symbol);
     if (sec === null) {
         // this user can create the security and its admin password
-        var params = {};
+        var params = {symbol: symbol};
         res.render('pages/create_security', params);
     } else {
         var params = getViewSecurityParams(symbol);
@@ -28,8 +28,8 @@ function getViewSecurityParams(symbol) {
     if (sec !== null) {
         var securityType = sec.securityType;
         var lastPrice = getLastTradedPrice(symbol);
-        var ordersThisSymbol = orders.getOrdersFromSymbol(symbol);
-        var orderBookLevels = orders.getOrderBookLevelsFromOrders(ordersThisSymbol);
+        var activeOrdersThisSymbol = orders.getActiveOrdersFromSymbol(symbol);
+        var orderBookLevels = orders.getOrderBookLevelsFromOrders(activeOrdersThisSymbol);
         var nLevels = 3;
         orderBookLevels = orders.getTopLevels(orderBookLevels, nLevels);
         var params = {

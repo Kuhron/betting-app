@@ -34,11 +34,23 @@ function getOrdersFromSymbol(symbol) {
             var owner = orderParams.owner;
             var orderNumber = parseInt(orderParams.orderNumber);
             var timeReceived = orderParams.timeReceived;  // ISO 8601 string
-            var order = new Order(size, originalSize, symbol, price, owner, orderNumber, timeReceived);
+            var status = orderParams.status;
+            var order = new Order(size, originalSize, symbol, price, owner, orderNumber, timeReceived, status);
             orders.push(order);
         }
     }
     return orders;
+}
+
+function getActiveOrdersFromSymbol(symbol) {
+    var orders = getOrdersFromSymbol(symbol);
+    var res = [];
+    for (var order of orders) {
+        if (order.status === "active") {
+            res.push(order);
+        }
+    }
+    return res;
 }
 
 function writeOrders(orders, symbol) {
@@ -145,17 +157,31 @@ function lookupOrder(symbol, orderNumber) {
     } else if (matchingOrders.length === 1) {
         return matchingOrders[0];
     } else {
-        throw new Error("more than one order matched");
+        throw new Error(`more than one order found with orderNumber ${orderNumber}`);
     }
 }
 
+function cancelOrders(orders) {
+    for (var order of orders) {
+        cancelOrder(order);
+    }
+}
+
+function cancelOrder(order) {
+    order.cancel();
+}
+
+
 module.exports = {
     getOrdersFromSymbol,
+    getActiveOrdersFromSymbol,
     getOrderBookLevelsFromOrders,
     getTopLevels,
     writeOrders,
     getNextOrderNumber,
     lookupOrder,
+    cancelOrder,
+    cancelOrders,
 };
 
 

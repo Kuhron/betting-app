@@ -1,5 +1,5 @@
 class Order {
-    constructor(size, originalSize, symbol, price, owner, orderNumber, timeReceived) {
+    constructor(size, originalSize, symbol, price, owner, orderNumber, timeReceived, status) {
         // for now, ignore more complicated stuff like time in force, icebergs (show size), etc.
         this.size = size;
         this.originalSize = originalSize;
@@ -8,6 +8,13 @@ class Order {
         this.owner = owner;
         this.orderNumber = orderNumber;
         this.timeReceived = timeReceived;
+        this.status = status;
+    }
+
+    toString() {
+        var sideStr = this.getDirection() === 1 ? "buy" : "sell";
+        var amount = this.getAmount();
+        return `Order to ${sideStr} ${amount} shares of ${this.symbol} at ${this.price}`;
     }
 
     getDirection() {
@@ -36,6 +43,14 @@ class Order {
 
     isTradedOut() {
         return this.size === 0;
+    }
+
+    cancel() {
+        this.status = "cancelled";
+    }
+
+    markCompleted() {
+        this.status = "completed";
     }
 }
 

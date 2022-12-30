@@ -17,13 +17,13 @@ function getTradesFromSymbol(symbol) {
     for (var i = 0; i < tradeParamsList.length; i++) {
         var tradeParams = tradeParamsList[i];
         if ((symbol === null) || (tradeParams.symbol === symbol)) {
-            var size = parseInt(tradeParams.size);
+            var amount = parseInt(tradeParams.amount);
             var symbol = tradeParams.symbol;
             var price = parseInt(tradeParams.price);
             var buyOrderNumber = parseInt(tradeParams.buyOrderNumber);
             var sellOrderNumber = parseInt(tradeParams.sellOrderNumber);
             var timeTraded = tradeParams.timeTraded;  // keep it as ISO string instead of Date object
-            var trade = new Trade(size, symbol, price, buyOrderNumber, sellOrderNumber, timeTraded);
+            var trade = new Trade(amount, symbol, price, buyOrderNumber, sellOrderNumber, timeTraded);
             trades.push(trade);
         }
     }
