@@ -20,9 +20,9 @@ function matchOrders(existingOrders, newOrder) {
     for (var passiveOrder of eligibleOrders) {
         if (!newOrder.isTradedOut()) {
             console.log("passive order: " + JSON.stringify(passiveOrder));
-            var absSizeAggressive = newOrder.getAbsSize();
-            var absSizePassive = passiveOrder.getAbsSize();
-            var amountTraded = Math.min(absSizePassive, absSizeAggressive);
+            var amountAggressive = newOrder.getAmount();
+            var amountPassive = passiveOrder.getAmount();
+            var amountTraded = Math.min(amountPassive, amountAggressive);
             console.log(`order ${newOrder.orderNumber} trading against passive order ${passiveOrder.orderNumber} for size ${amountTraded}`);
             var priceTraded = passiveOrder.price;  // passive order's price is used so incoming order gets best price
             var buyOrder = incomingIsBuy ? newOrder : passiveOrder;
@@ -79,7 +79,7 @@ function getOrdersEligibleForMatching(existingOrders, newOrder) {
         }
         var priceIsEligible = incomingIsBuy ? (order.price <= newOrder.price) : (order.price >= newOrder.price);
         var sideIsEligible = incomingIsBuy ? (order.getDirection() === -1) : (order.getDirection() === 1);
-        var sizeIsEligible = order.getAbsSize() > 0;
+        var sizeIsEligible = order.getAmount() > 0;
         var orderIsEligible = priceIsEligible && sideIsEligible && sizeIsEligible;
         if (orderIsEligible) {
             eligibleOrders.push(order);

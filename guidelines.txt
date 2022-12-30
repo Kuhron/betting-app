@@ -1,0 +1,1 @@
+- "size" refers to the signed trade amount, e.g. +2 to buy 2, -4 to sell 4; "amount" refers to the absolute value of this

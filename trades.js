@@ -3,6 +3,8 @@ const fs = require('fs');
 const filepaths = require('./filepaths.js');
 
 const Trade = require('./classes/Trade.js');
+const { lookupOrder } = require('./orders.js');
+const { getAccountFromOwner } = require('./users.js');
 
 
 
@@ -71,9 +73,33 @@ function compareTradesByTime(t1, t2) {
     return 0;
 }
 
+function processTradesInAccounts(trades) {
+    for (var trade of trades) {
+        processTradeInAccounts(trade);
+    }
+}
+
+function processTradeInAccounts(trade) {
+    var symbol = trade.symbol;
+    var buyOrderNumber = trade.buyOrderNumber;
+    var sellOrderNumber = trade.sellOrderNumber;
+    var buyOrder = lookupOrder(symbol, buyOrderNumber);
+    var sellOrder = lookupOrder(symbol, sellOrderNumber);
+    var amount = trade.amount;
+    var price = trade.price;
+    var buyer = buyOrder.owner;
+    var seller = sellOrder.owner;
+    var buyingAccount = getAccountFromOwner(buyer);
+    var sellingAccount = getAccountFromOwner(seller);
+    buyingAccount.buy(amount, symbol, price);
+    sellingAccount.sell(amount, symbol, price);
+}
+
 module.exports = {
     getTradesFromSymbol,
     writeTrades,
     appendTrades,
     getLastTradedPrice,
+    processTradeInAccounts,
+    processTradesInAccounts,
 }

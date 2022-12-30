@@ -1,10 +1,11 @@
 - list security symbols on front page, user can click to be taken to that security's page
+- page to create a new security if you search for one that doesn't exist
+- button on front page to create new security
 - cancel passive order if self-match
-- cancel order
+- cancel active order
 - edit order (will cancel and submit a new one)
 - view my active orders
 
-- user "login" (just do username, no password for now)
 - page to show user's positions
 - add new security (and this user will set its admin password, and then anyone knowing that password can do admin stuff like settle the security, halt trading, etc.)
 - security type: boolean (delta)
@@ -13,5 +14,4 @@
 - if underlying is a security, this derivative on that security needs to specify how it is settled (e.g. last traded price before deadline)
 - specify expiration date
 - if settles by print, the security's admin needs to input that value once security has expired
-- matching engine
 - start players off with an amount of fake money 

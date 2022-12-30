@@ -44,6 +44,14 @@ function getSecurityInfoFilepath() {
     return fp;
 }
 
+function getUserInfoFilepath() {
+    const appDir = getAppDir();
+    var fname = "users.json";
+    var fp = path.join(appDir, fname);
+    createFileIfNotExists(fp, "{\"users\": []}");
+    return fp;
+}
+
 function createFileIfNotExists(fp, defaultContents) {
     if (!fs.existsSync(fp)) {
         fs.writeFileSync(fp, defaultContents);
@@ -62,5 +70,6 @@ module.exports = {
     getDirForSecurity,
     getOrdersFilepathForSecurity,
     getSecurityInfoFilepath,
+    getUserInfoFilepath,
     getTradesFilepathForSecurity,
 };

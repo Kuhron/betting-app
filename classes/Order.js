@@ -15,7 +15,7 @@ class Order {
         return direction;
     }
 
-    getAbsSize() {
+    getAmount() {
         return Math.abs(this.size);
     }
 
@@ -24,13 +24,13 @@ class Order {
             throw new Error("traded size must be positive")
         }
         // reduce the amount of this order when some is traded
-        var absSize = this.getAbsSize();
-        absSize -= size;
-        if (absSize < 0) {
+        var amount = this.getAmount();
+        amount -= size;
+        if (amount < 0) {
             throw new Error("traded more than available size");
         }
         var sign = this.getDirection();
-        var newSize = sign * absSize;
+        var newSize = sign * amount;
         this.size = newSize;
     }
 

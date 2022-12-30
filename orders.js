@@ -64,11 +64,11 @@ function getOrderBookLevelsFromOrders(orders) {
             level = new OrderBookLevel(order.price, 0, 0);
         }
         var direction = order.getDirection();
-        var absSize = Math.abs(order.size);
+        var amount = order.getAmount();
         if (direction === 1) {
-            level.bids += absSize;
+            level.bids += amount;
         } else {
-            level.offers += absSize;
+            level.offers += amount;
         }
         levelsByPrice[order.price] = level;
     }
@@ -130,17 +130,23 @@ function getTopLevels(levels, n) {
 function getNextOrderNumber() {
     var orders = getAllOrders();
     return orders.length + 1;
+}
 
-    // var maxOrderNumber = null;
-    // for (var order of orders) {
-    //     var num = order.orderNumber;
-    //     if (maxOrderNumber === null) {
-    //         maxOrderNumber = num;
-    //     } else {
-    //         maxOrderNumber = Math.max(maxOrderNumber, num);
-    //     }
-    // }
-    // return maxOrderNumber + 1;
+function lookupOrder(symbol, orderNumber) {
+    var orders = getOrdersFromSymbol(symbol);
+    var matchingOrders = [];
+    for (var order of orders) {
+        if (order.orderNumber === orderNumber) {
+            matchingOrders.push(order);
+        }
+    }
+    if (matchingOrders.length === 0) {
+        return null;
+    } else if (matchingOrders.length === 1) {
+        return matchingOrders[0];
+    } else {
+        throw new Error("more than one order matched");
+    }
 }
 
 module.exports = {
@@ -149,6 +155,7 @@ module.exports = {
     getTopLevels,
     writeOrders,
     getNextOrderNumber,
+    lookupOrder,
 };
 
 

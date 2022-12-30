@@ -1,6 +1,6 @@
 class Trade {
-    constructor(size, symbol, price, buyOrderNumber, sellOrderNumber, timeTraded) {
-        this.size = size;
+    constructor(amount, symbol, price, buyOrderNumber, sellOrderNumber, timeTraded) {
+        this.amount = amount;
         this.symbol = symbol;
         this.price = price;
         this.buyOrderNumber = buyOrderNumber;
@@ -9,7 +9,7 @@ class Trade {
     }
 
     toString() {
-        return `traded ${this.size} ${this.symbol} at price of ${this.price}`;
+        return `traded ${this.amount} ${this.symbol} at price of ${this.price}`;
     }
 }
 
