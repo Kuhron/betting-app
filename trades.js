@@ -4,7 +4,7 @@ const filepaths = require('./filepaths.js');
 
 const Trade = require('./classes/Trade.js');
 const { lookupOrder } = require('./orders.js');
-const { getAccountFromOwner } = require('./users.js');
+const { getAccountFromOwner, updateAccountRecords } = require('./users.js');
 
 
 
@@ -93,6 +93,7 @@ function processTradeInAccounts(trade) {
     var sellingAccount = getAccountFromOwner(seller);
     buyingAccount.buy(amount, symbol, price);
     sellingAccount.sell(amount, symbol, price);
+    updateAccountRecords([buyingAccount, sellingAccount]);
 }
 
 module.exports = {

@@ -2,6 +2,7 @@ const express = require('express');
 
 const { viewSecurity } = require('./server_interactions/viewSecurity.js');
 const { placeOrder } = require('./server_interactions/placeOrder.js');
+const { createSecurity } = require('./server_interactions/createSecurity.js');
 
 const router = express.Router();
 const app = express();
@@ -19,6 +20,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/view_security', viewSecurity);
+router.post('/create_security', createSecurity);
 router.post('/place_order', placeOrder);
 
 app.use('/', router);

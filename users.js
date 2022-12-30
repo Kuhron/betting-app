@@ -23,6 +23,15 @@ function getAllUsers() {
     return users;
 }
 
+function getAllUsersByUsername() {
+    var users = getAllUsers();
+    var result = {};
+    for (var user of users) {
+        result[user.username] = user;
+    }
+    return result;
+}
+
 function getAccountFromParams(params) {
     var owner = params.owner;
     var account = new Account(owner);
@@ -56,8 +65,13 @@ function writeUsers(users) {
     fs.writeFileSync(fp, JSON.stringify(d, null, 4));
 }
 
-function writeAllUsers() {
-    var users = getAllUsers();
+function updateAccountRecords(accounts) {
+    var users = getAllUsersByUsername();
+    for (var account of accounts) {
+        var owner = account.owner;
+        users[owner].account = account;
+    }
+    var users = Object.values(users);
     writeUsers(users);
 }
 
@@ -86,7 +100,6 @@ function getUserFromUsername(username) {
         }
     }
     if (matchingUsers.length === 0) {
-        console.log(`No user named ${username}.`);
         return null;
     } else if (matchingUsers.length === 1) {
         return matchingUsers[0];
@@ -106,9 +119,9 @@ function createUserIfNotExists(username) {
 module.exports = {
     getAllUsers,
     writeUsers,
-    writeAllUsers,
     usernameIsValid,
     getUserFromUsername,
     getAccountFromOwner,
     createUserIfNotExists,
+    updateAccountRecords,
 };

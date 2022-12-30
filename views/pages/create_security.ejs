@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+  <div id="createSecurity" name="createSecurity">
+    <h1>Create new security</h1>
+    <form action="/create_security" method="POST">
+      <label for="symbol">Symbol:</label>
+      <input type="text" id="symbol" name="symbol"><br>
+      <select id="securityType" name="securityType">
+        <option value="Future">Future</option>
+        <option value="Boolean">Boolean</option>
+      </select><br>
+      <label for="passcode">Passcode for administering this security:</label>
+      <input type="text" id="passcode" name="passcode"><br>
+      <input type="submit" id="submit" name="submit" value="Submit">
+    </form>
+  </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

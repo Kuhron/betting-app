@@ -27,6 +27,12 @@ function writeSecurities(secs) {
     fs.writeFileSync(fp, JSON.stringify(d, null, 4));
 }
 
+function writeNewSecurity(sec) {
+    var secs = getAllSecurities().slice();
+    secs.push(sec);
+    writeSecurities(secs);
+}
+
 function symbolIsValid(symbol) {
     return /^[A-Z0-9]+$/g.test(symbol);
 }
@@ -53,6 +59,7 @@ module.exports = {
     getAllSecurities,
     symbolIsValid,
     getSecurityFromSymbol,
+    writeNewSecurity,
 };
 
 

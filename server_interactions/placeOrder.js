@@ -30,11 +30,9 @@ function placeOrder(req, res) {
         var matchingResult = matchOrders(existingOrders, order);
         var remainingOrders = matchingResult.remainingOrders;
         var trades = matchingResult.trades;
-        // transferCashFromTrades(trades);
         writeOrders(remainingOrders, symbol);
         appendTrades(trades, symbol);
         processTradesInAccounts(trades);
-        writeAllUsers();
 
         var orderStatusMessages = ["Order submitted."];
         for (var trade of trades) {
