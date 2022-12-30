@@ -50,7 +50,7 @@ function writeNewSecurity(sec) {
 function updateSecurityRecord(sec) {
     var secs = getAllSecuritiesBySymbol();
     secs[sec.symbol] = sec;
-    console.log("updating security: " + JSON.stringify(sec));
+    // console.log("updating security: " + JSON.stringify(sec));
     var secs = Object.values(secs);
     writeSecurities(secs);
 }
@@ -80,6 +80,8 @@ function getSecurityFromSymbol(symbol) {
 
 function settleSecurityInAccounts(symbol, settlementPrice) {
     // convert between the security and what it settles into
+    // TODO for securities that settle into others (e.g. option on a future),
+    // - should buy one at price of 0 and sell the other at price of 0, to do the conversion
     var sec = getSecurityFromSymbol(symbol);
     var accounts = getAllAccounts();
     for (var account of accounts) {

@@ -52,7 +52,6 @@ function getViewSecurityParams(symbol) {
             symbol: symbol
         };
     }
-    console.log("viewSecurityParams: " + JSON.stringify(params));
     return params;
 }
 

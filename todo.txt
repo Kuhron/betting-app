@@ -7,14 +7,15 @@
 -- set lot size e.g. directly to 1, 5, 10, or up/down like +/-1, +/-10, +/-100
 -- click bids/offers to place order there
 
-- show empty book if there are no orders
-- security admin actions: halt trading, settle/expire
-- if security is halted, buttons to resume or settle
-- if security is active, buttons to halt or settle
-- security type: boolean (delta)
+- FIXME show empty book message if there are no orders rather than just blank space (remove empty levels from the book object)
+- FIXME remove empty positions from accounts
+- show user's trade history
+- show graph of traded prices (and/or top level of book) for security
+- show graph of user's balance over time
+- include some incentive against users escalating betting to infinite loss (charge interest on margin, or don't let them go below a certain amount of debt)
 - security type: option
 - let security have an underlying of an existing security or a "print" (just a value that isn't a traded security)
-- if underlying is a security, this derivative on that security needs to specify how it is settled (e.g. last traded price before deadline)
+- if underlying is a security, this derivative on that security needs to specify how settlement price is determined (e.g. last traded price before deadline)
 - specify expiration date
 - if settles by print, the security's admin needs to input that value once security has expired
 - start players off with an amount of fake money 

@@ -27,7 +27,7 @@ function matchOrders(existingOrders, newOrder) {
             var amountAggressive = newOrder.getAmount();
             var amountPassive = passiveOrder.getAmount();
             var amountTraded = Math.min(amountPassive, amountAggressive);
-            console.log(`order ${newOrder.orderNumber} trading against passive order ${passiveOrder.orderNumber} for size ${amountTraded}`);
+            // console.log(`order ${newOrder.orderNumber} trading against passive order ${passiveOrder.orderNumber} for size ${amountTraded}`);
             var priceTraded = passiveOrder.price;  // passive order's price is used so incoming order gets best price
             var buyOrder = incomingIsBuy ? newOrder : passiveOrder;
             var sellOrder = incomingIsBuy ? passiveOrder : newOrder;

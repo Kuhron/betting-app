@@ -38,58 +38,58 @@
       <p>Last traded price: <%= locals.lastPrice !== null ? lastPrice : 'Unknown' %></p>
     <% } %>
   </div>
-  <div id="orderBook" name="orderBook">
-    <h3>Current order book (up to <%= locals.nLevels ? nLevels : "Unknown" %> levels)</h3>
-    <% if (locals.orderBookLevels) { %>
+  <% if (status !== 'settled') { %>
+    <div id="orderBook" name="orderBook">
+      <h3>Current order book (up to <%= locals.nLevels ? nLevels : "Unknown" %> levels)</h3>
+      <% if (locals.orderBookLevels) { %>
         <table>
         <tr>
-            <th>Bids</th>
-            <th>Price</th>
-            <th>Offers</th>
+          <th>Bids</th>
+          <th>Price</th>
+          <th>Offers</th>
         </tr>
         <% for (var level of orderBookLevels) { %>
-            <tr>
-                <td><%= (level.bids > 0) ? level.bids : '-' %></td>
-                <td><%= level.price %></td>
-                <td><%= (level.offers > 0) ? level.offers : '-' %></td>
-            </tr>
+          <tr>
+            <td><%= (level.bids > 0) ? level.bids : '-' %></td>
+            <td><%= level.price %></td>
+            <td><%= (level.offers > 0) ? level.offers : '-' %></td>
+          </tr>
         <% } %>
         </table>
-    <% } else { %>
+      <% } else { %>
         <p>There are no active orders.</p>
-    <% } %>
-  </div>
-  <div id="placeOrder" name="placeOrder">
-    <form action="/placeOrder" method="POST">
-      <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>"> <!-- this is a hack to pass the symbol variable back to the server once the form makes the post request -->
-      <label for="owner">Username:</label>
-      <input type="text" id="owner" name="owner" value="<%= locals.username ? username : 'Unknown' %>"><br>
-      <label for="orderPrice">Price:</label>
-      <input type="number" id="orderPrice" name="orderPrice" step="<%= tickSize %>"><br>
-      <label for="orderSize">Size:</label>
-      <input type="number" id="orderSize" name="orderSize" min="1" max="9999"><br>
-      <input type="submit" id="buyButton" name="buyButton" value="Buy">
-      <input type="submit" id="sellButton" name="sellButton" value="Sell">
-    </form>
-  </div>
-  <% if (status !== 'settled') { %>
-  <div id="administerSecurity" name="administerSecurity">
-    <h3>Administer security</h3>
-    <form action="/administerSecurity" method="POST">
-      <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>">
-      <label for="passcode">Administrator passcode:</label>
-      <input type="text" id="passcode" name="passcode"><br>
-      <% if (status === 'active') { %>
-        <input type="submit" id="haltTradingButton" name="haltTradingButton" value="Halt trading"><br>
       <% } %>
-      <% if (status === 'halted') { %>
-        <input type="submit" id="resumeTradingButton" name="resumeTradingButton" value="Resume trading"><br>
-      <% } %>
-      <label for="settlementPrice">Settlement price:</label>
-      <input type="number" step="any" id="settlementPrice" name="settlementPrice">
-      <input type="submit" id="settleButton" name="settleButton" value="Settle security"><br>
-    </form>
-  </div>
+    </div>
+    <div id="placeOrder" name="placeOrder">
+      <form action="/placeOrder" method="POST">
+        <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>"> <!-- this is a hack to pass the symbol variable back to the server once the form makes the post request -->
+        <label for="owner">Username:</label>
+        <input type="text" id="owner" name="owner" value="<%= locals.username ? username : 'Unknown' %>"><br>
+        <label for="orderPrice">Price:</label>
+        <input type="number" id="orderPrice" name="orderPrice" step="<%= tickSize %>"><br>
+        <label for="orderSize">Size:</label>
+        <input type="number" id="orderSize" name="orderSize" min="1" max="9999"><br>
+        <input type="submit" id="buyButton" name="buyButton" value="Buy">
+        <input type="submit" id="sellButton" name="sellButton" value="Sell">
+      </form>
+    </div>
+    <div id="administerSecurity" name="administerSecurity">
+      <h3>Administer security</h3>
+      <form action="/administerSecurity" method="POST">
+        <input hidden type="text" id="symbol" name="symbol" value="<%= symbol %>">
+        <label for="passcode">Administrator passcode:</label>
+        <input type="text" id="passcode" name="passcode"><br>
+        <% if (status === 'active') { %>
+          <input type="submit" id="haltTradingButton" name="haltTradingButton" value="Halt trading"><br>
+        <% } %>
+        <% if (status === 'halted') { %>
+          <input type="submit" id="resumeTradingButton" name="resumeTradingButton" value="Resume trading"><br>
+        <% } %>
+        <label for="settlementPrice">Settlement price:</label>
+        <input type="number" step="any" id="settlementPrice" name="settlementPrice">
+        <input type="submit" id="settleButton" name="settleButton" value="Settle security"><br>
+      </form>
+    </div>
   <% } %>
 </main>
 

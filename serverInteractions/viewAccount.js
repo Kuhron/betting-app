@@ -21,7 +21,6 @@ function viewAccount(req, res) {
             cashBalance: cashBalance,
             positions: positions,
         }
-        console.log(JSON.stringify(params));
     }
     res.render('pages/accountInformation', params);
 }
