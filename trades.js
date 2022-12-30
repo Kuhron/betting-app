@@ -5,6 +5,7 @@ const filepaths = require('./filepaths.js');
 const Trade = require('./classes/Trade.js');
 const { lookupOrder } = require('./orders.js');
 const { getAccountFromOwner, updateAccountRecords } = require('./users.js');
+const { getSecurityFromSymbol } = require('./securities.js');
 
 
 
@@ -19,7 +20,7 @@ function getTradesFromSymbol(symbol) {
         if ((symbol === null) || (tradeParams.symbol === symbol)) {
             var amount = parseInt(tradeParams.amount);
             var symbol = tradeParams.symbol;
-            var price = parseInt(tradeParams.price);
+            var price = parseFloat(tradeParams.price);
             var buyOrderNumber = parseInt(tradeParams.buyOrderNumber);
             var sellOrderNumber = parseInt(tradeParams.sellOrderNumber);
             var timeTraded = tradeParams.timeTraded;  // keep it as ISO string instead of Date object
@@ -81,6 +82,8 @@ function processTradesInAccounts(trades) {
 
 function processTradeInAccounts(trade) {
     var symbol = trade.symbol;
+    var sec = getSecurityFromSymbol(symbol);
+    var multiplier = sec.multiplier;
     var buyOrderNumber = trade.buyOrderNumber;
     var sellOrderNumber = trade.sellOrderNumber;
     var buyOrder = lookupOrder(symbol, buyOrderNumber);
@@ -91,8 +94,8 @@ function processTradeInAccounts(trade) {
     var seller = sellOrder.owner;
     var buyingAccount = getAccountFromOwner(buyer);
     var sellingAccount = getAccountFromOwner(seller);
-    buyingAccount.buy(amount, symbol, price);
-    sellingAccount.sell(amount, symbol, price);
+    buyingAccount.buy(amount, symbol, price, multiplier);
+    sellingAccount.sell(amount, symbol, price, multiplier);
     updateAccountRecords([buyingAccount, sellingAccount]);
 }
 

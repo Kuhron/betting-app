@@ -9,7 +9,7 @@ function getAppDir() {
 
 function getSecurityDataDir() {
     const appDir = getAppDir();
-    const securityDataDir = path.join(appDir, "security_data");
+    const securityDataDir = path.join(appDir, "securityData");
     return securityDataDir;
 }
 

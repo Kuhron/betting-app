@@ -12,7 +12,7 @@
 <main>
   <div id="createSecurity" name="createSecurity">
     <h1>Create new security</h1>
-    <form action="/create_security" method="POST">
+    <form action="/createSecurity" method="POST">
       <label for="symbol">Symbol:</label>
       <input type="text" id="symbol" name="symbol" value="<%= locals.symbol ? symbol : '' %>"><br>
       <select id="securityType" name="securityType">
@@ -21,6 +21,10 @@
       </select><br>
       <label for="passcode">Passcode for administering this security:</label>
       <input type="text" id="passcode" name="passcode"><br>
+      <label for="tickSize">Tick size:</label>
+      <input type="number" step="any" id="tickSize" name="tickSize"><br>
+      <label for="multiplier">Multiplier:</label>
+      <input type="number" step="any" id="multiplier" name="multiplier"><br>
       <input type="submit" id="submit" name="submit" value="Submit">
     </form>
   </div>

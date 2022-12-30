@@ -1,7 +1,7 @@
 const { usernameIsValid, getAccountFromOwner, createUserIfNotExists } = require("../users");
 
 function viewAccountInformationPageBlank(req, res) {
-    res.render('pages/account_information', {});
+    res.render('pages/accountInformation', {});
 }
 
 function viewAccount(req, res) {
@@ -23,7 +23,7 @@ function viewAccount(req, res) {
         }
         console.log(JSON.stringify(params));
     }
-    res.render('pages/account_information', params);
+    res.render('pages/accountInformation', params);
 }
 
 module.exports = {

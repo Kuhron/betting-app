@@ -30,7 +30,7 @@ function getOrdersFromSymbol(symbol) {
             var size = parseInt(orderParams.size);
             var originalSize = parseInt(orderParams.originalSize);
             var symbol = orderParams.symbol;
-            var price = parseInt(orderParams.price);
+            var price = parseFloat(orderParams.price);
             var owner = orderParams.owner;
             var orderNumber = parseInt(orderParams.orderNumber);
             var timeReceived = orderParams.timeReceived;  // ISO 8601 string
@@ -40,6 +40,15 @@ function getOrdersFromSymbol(symbol) {
         }
     }
     return orders;
+}
+
+function getOrdersByNumberFromSymbol(symbol) {
+    var orders = getOrdersFromSymbol(symbol);
+    var result = {};
+    for (var order of orders) {
+        result[order.orderNumber] = order;
+    }
+    return result;
 }
 
 function getActiveOrdersFromSymbol(symbol) {
@@ -169,6 +178,14 @@ function cancelOrders(orders) {
 
 function cancelOrder(order) {
     order.cancel();
+    updateOrderRecord(order);
+}
+
+function updateOrderRecord(order) {
+    var orders = getOrdersByNumberFromSymbol(order.symbol);
+    orders[order.orderNumber] = order;
+    orders = Object.values(orders);
+    writeOrders(orders, order.symbol);
 }
 
 
@@ -176,6 +193,7 @@ module.exports = {
     getOrdersFromSymbol,
     getActiveOrdersFromSymbol,
     getOrderBookLevelsFromOrders,
+    getOrdersByNumberFromSymbol,
     getTopLevels,
     writeOrders,
     getNextOrderNumber,

@@ -53,6 +53,15 @@ function getAccountFromOwner(username) {
     return user.account;
 }
 
+function getAllAccounts() {
+    var users = getAllUsers();
+    var result = [];
+    for (var user of users) {
+        result.push(user.account);
+    }
+    return result;
+}
+
 function getPositionsFromParams(params) {
     // just an object of symbol to amount as int
     var positions = {};
@@ -86,7 +95,7 @@ function writeNewUser(user) {
 
 function usernameIsValid(username) {
     if (username.length === 0) return false;
-    return /^[A-Za-z0-9_.]+$/g.test(username);
+    return /^[A-Za-z0-9]+$/g.test(username);
 }
 
 function getNewUserFromUsername(username) {
@@ -122,6 +131,7 @@ function createUserIfNotExists(username) {
 
 module.exports = {
     getAllUsers,
+    getAllAccounts,
     writeUsers,
     usernameIsValid,
     getUserFromUsername,

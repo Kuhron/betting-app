@@ -15,12 +15,12 @@
     <% if (locals.errorMessage) { %>
       <p>Error: <%= errorMessage %></p>
     <% } %>
-    <form action="/view_security" method="POST">
-      <label for="input_security">View security:</label>
-      <input type="text" id="input_security" name="input_security">
+    <form action="/viewSecurity" method="POST">
+      <label for="inputSecurity">View security:</label>
+      <input type="text" id="inputSecurity" name="inputSecurity">
       <input type="submit" value="OK">
     </form>
-    <form action="/view_create_security_page" method="GET">
+    <form action="/viewCreateSecurityPage" method="GET">
       <input type="submit" value="Create new security">
     </form>
   </div>

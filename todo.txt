@@ -7,7 +7,10 @@
 -- set lot size e.g. directly to 1, 5, 10, or up/down like +/-1, +/-10, +/-100
 -- click bids/offers to place order there
 
+- show empty book if there are no orders
 - security admin actions: halt trading, settle/expire
+- if security is halted, buttons to resume or settle
+- if security is active, buttons to halt or settle
 - security type: boolean (delta)
 - security type: option
 - let security have an underlying of an existing security or a "print" (just a value that isn't a traded security)
@@ -15,3 +18,7 @@
 - specify expiration date
 - if settles by print, the security's admin needs to input that value once security has expired
 - start players off with an amount of fake money 
+- don't expose stack trace to users, send a 500 page and console.err the error
+- how to prevent race condition with multiple users creating securities with same symbol?
+- let user change how many book levels are shown
+- maybe move order book to a partial view so it can be included in other pages, pass params as object like include('partials/orderBook', params)

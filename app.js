@@ -1,9 +1,10 @@
 const express = require('express');
 
-const { viewSecurity } = require('./server_interactions/viewSecurity.js');
-const { placeOrder } = require('./server_interactions/placeOrder.js');
-const { createSecurity, viewCreateSecurityPageBlank } = require('./server_interactions/createSecurity.js');
-const { viewAccount, viewAccountInformationPageBlank } = require('./server_interactions/viewAccount.js');
+const { viewSecurity } = require('./serverInteractions/viewSecurity.js');
+const { placeOrder } = require('./serverInteractions/placeOrder.js');
+const { createSecurity, viewCreateSecurityPageBlank } = require('./serverInteractions/createSecurity.js');
+const { viewAccount, viewAccountInformationPageBlank } = require('./serverInteractions/viewAccount.js');
+const { administerSecurity } = require('./serverInteractions/administerSecurity.js');
 
 const router = express.Router();
 const app = express();
@@ -18,15 +19,16 @@ router.get('/', (req, res) => {
     res.render('pages/index', {});
 });
 
-router.post('/view_security', viewSecurity);
+router.post('/viewSecurity', viewSecurity);
 
-router.post('/create_security', createSecurity);
-router.get('/view_create_security_page', viewCreateSecurityPageBlank);
+router.post('/createSecurity', createSecurity);
+router.get('/viewCreateSecurityPage', viewCreateSecurityPageBlank);
 
-router.post('/place_order', placeOrder);
+router.post('/placeOrder', placeOrder);
+router.post('/administerSecurity', administerSecurity);
 
-router.get('/view_account_information_page', viewAccountInformationPageBlank);
-router.post('/update_username_on_account_page', viewAccount);
+router.post('/updateUsernameOnAccountPage', viewAccount);
+router.get('/viewAccountInformationPage', viewAccountInformationPageBlank);
 
 app.use('/', router);
 

@@ -5,14 +5,14 @@ class Account {
         this.positions = {};
     }
 
-    buy(amount, symbol, price) {
-        var dCash = -1 * amount * price;
+    buy(amount, symbol, price, multiplier) {
+        var dCash = -1 * amount * price * multiplier;
         this.addCash(dCash);
         this.addShares(symbol, amount);
     }
 
-    sell(amount, symbol, price) {
-        var dCash = amount * price;
+    sell(amount, symbol, price, multiplier) {
+        var dCash = amount * price * multiplier;
         this.addCash(dCash);
         this.addShares(symbol, -1 * amount);
     }
