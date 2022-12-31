@@ -1,7 +1,4 @@
 - list security symbols on front page, user can click to be taken to that security's page
-- cancel active order
-- edit order (will cancel and submit a new one)
-- page to view my active orders
 - columns to view my active orders in the order book
 - buttons to click trade in the order book gui
 -- set lot size e.g. directly to 1, 5, 10, or up/down like +/-1, +/-10, +/-100
@@ -9,6 +6,9 @@
 
 - FIXME show empty book message if there are no orders rather than just blank space (remove empty levels from the book object)
 - FIXME remove empty positions from accounts
+- user's orders page, filter by status
+- cancel active order
+- edit order (will cancel and submit a new one)
 - show user's trade history
 - show graph of traded prices (and/or top level of book) for security
 - show graph of user's balance over time
@@ -23,3 +23,10 @@
 - how to prevent race condition with multiple users creating securities with same symbol?
 - let user change how many book levels are shown
 - maybe move order book to a partial view so it can be included in other pages, pass params as object like include('partials/orderBook', params)
+- future on time amounts (quoted in hours and minutes)
+- be able to type minus sign in number input box on mobile
+- last traded price should be average of whole trade, not just last level traded
+- average traded price (and/or cost basis) of position
+- anytime security symbol is mentioned, can click it to go to info page
+- security needs description about what it is for
+- is there an easy way to get a nicer mobile UI? some existing stylesheet that can do both desktop and mobile automatically?

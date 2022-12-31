@@ -1,5 +1,5 @@
 const Security = require("../classes/Security");
-const { writeNewSecurity, symbolIsValid, getSecurityFromSymbol } = require("../securities");
+const { writeNewSecurity, symbolIsValid, getSecurityFromSymbol, getActiveSecuritySymbols } = require("../securities");
 const { getViewSecurityParams } = require("./viewSecurity");
 
 
@@ -11,14 +11,21 @@ function viewCreateSecurityPageBlank(req, res) {
 function createSecurity(req, res) {
     var symbol = req.body.symbol.toUpperCase();
     var valid = symbolIsValid(symbol);
+    var activeSymbols = getActiveSecuritySymbols();
     if (!valid) {
-        var params = { errorMessage: 'Invalid symbol given, please try again' };
+        var params = {
+            errorMessage: 'Invalid symbol given, please try again',
+            activeSymbols: activeSymbols,
+        };
         res.render('pages/index', params);
         return;
     }
     var sec = getSecurityFromSymbol(symbol);
     if (sec !== null) {
-        var params = { errorMessage: `Security with symbol ${symbol} already exists.` };
+        var params = {
+            errorMessage: `Security with symbol ${symbol} already exists.`,
+            activeSymbols: activeSymbols,
+        };
         res.render('pages/index', params);
         return;
     }

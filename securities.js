@@ -103,6 +103,26 @@ function settleSecurityInAccounts(symbol, settlementPrice) {
     updateAccountRecords(accounts);
 }
 
+function getActiveSecurities() {
+    var secs = getAllSecurities();
+    var result = [];
+    for (var sec of secs) {
+        if (sec.status === "active") {
+            result.push(sec);
+        }
+    }
+    return result;
+}
+
+function getActiveSecuritySymbols() {
+    var secs = getActiveSecurities();
+    var result = [];
+    for (var sec of secs) {
+        result.push(sec.symbol);
+    }
+    return result;
+}
+
 module.exports = {
     getAllSecurities,
     symbolIsValid,
@@ -110,6 +130,8 @@ module.exports = {
     writeNewSecurity,
     updateSecurityRecord,
     settleSecurityInAccounts,
+    getActiveSecurities,
+    getActiveSecuritySymbols,
 };
 
 

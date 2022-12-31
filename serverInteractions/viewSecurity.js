@@ -6,7 +6,10 @@ function viewSecurity(req, res) {
     var symbol = req.body.inputSecurity.toUpperCase();
     var valid = symbolIsValid(symbol);
     if (!valid) {
-        var params = { errorMessage: 'invalid symbol given, please try again' };
+        var params = {
+            errorMessage: 'invalid symbol given, please try again',
+            activeSymbols: activeSymbols,
+        };
         res.render('pages/index', params);
         return;
     }

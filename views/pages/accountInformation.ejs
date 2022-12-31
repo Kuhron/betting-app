@@ -34,7 +34,7 @@
       <p>Cash balance: <%= locals.cashBalance !== null ? cashBalance : 'Unknown' %></p>
       <% if (locals.positions && Object.keys(positions).length > 0) { %>
         <% for (var symbol in positions) { %>
-          <p><%= symbol %>: <%= positions[symbol] %></p>
+          <p><%- include('../partials/linkForSymbol', {symbol:symbol}); %>: <%= positions[symbol] %></p>
         <% } %>
       <% } else { %>
         <p>No positions held.</p>
