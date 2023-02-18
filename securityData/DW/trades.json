@@ -1,0 +1,12 @@
+{
+    "trades": [
+        {
+            "amount": 1,
+            "symbol": "DW",
+            "price": 60,
+            "buyOrderNumber": 6,
+            "sellOrderNumber": 20,
+            "timeTraded": "2022-12-31T00:03:56.031Z"
+        }
+    ]
+}

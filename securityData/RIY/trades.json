@@ -1,0 +1,12 @@
+{
+    "trades": [
+        {
+            "amount": 1,
+            "symbol": "RIY",
+            "price": 2100,
+            "buyOrderNumber": 31,
+            "sellOrderNumber": 30,
+            "timeTraded": "2023-01-01T01:59:12.830Z"
+        }
+    ]
+}

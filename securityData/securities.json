@@ -1,0 +1,40 @@
+{
+    "securities": [
+        {
+            "symbol": "DW",
+            "password": "asdf",
+            "securityType": "Future",
+            "tickSize": 5,
+            "multiplier": 1,
+            "status": "settled",
+            "settlementPrice": 26
+        },
+        {
+            "symbol": "FT",
+            "password": "asdf",
+            "securityType": "Future",
+            "tickSize": 5,
+            "multiplier": 1,
+            "status": "settled",
+            "settlementPrice": 54
+        },
+        {
+            "symbol": "RIY",
+            "password": "asdf",
+            "securityType": "Future",
+            "tickSize": 1,
+            "multiplier": 0.001,
+            "status": "settled",
+            "settlementPrice": 7500
+        },
+        {
+            "symbol": "H",
+            "password": "e",
+            "securityType": "Future",
+            "tickSize": 1,
+            "multiplier": 1,
+            "status": "active",
+            "settlementPrice": null
+        }
+    ]
+}

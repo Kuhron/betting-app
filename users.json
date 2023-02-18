@@ -1,0 +1,121 @@
+{
+    "users": [
+        {
+            "username": "wkj",
+            "account": {
+                "owner": "wkj",
+                "cash": 12,
+                "positions": {
+                    "DW": 0,
+                    "FT": 0
+                }
+            }
+        },
+        {
+            "username": "nic",
+            "account": {
+                "owner": "nic",
+                "cash": 11,
+                "positions": {
+                    "FT": 0
+                }
+            }
+        },
+        {
+            "username": "joe",
+            "account": {
+                "owner": "joe",
+                "cash": -34,
+                "positions": {
+                    "DW": 0
+                }
+            }
+        },
+        {
+            "username": "kate",
+            "account": {
+                "owner": "kate",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "sally",
+            "account": {
+                "owner": "sally",
+                "cash": 11,
+                "positions": {
+                    "FT": 0
+                }
+            }
+        },
+        {
+            "username": "jack",
+            "account": {
+                "owner": "jack",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "kim",
+            "account": {
+                "owner": "kim",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "henry",
+            "account": {
+                "owner": "henry",
+                "cash": 5.4,
+                "positions": {
+                    "RIY": 0
+                }
+            }
+        },
+        {
+            "username": "cindy",
+            "account": {
+                "owner": "cindy",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "wesley",
+            "account": {
+                "owner": "wesley",
+                "cash": -5.4,
+                "positions": {
+                    "RIY": 0
+                }
+            }
+        },
+        {
+            "username": "nicola",
+            "account": {
+                "owner": "nicola",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "t",
+            "account": {
+                "owner": "t",
+                "cash": 0,
+                "positions": {}
+            }
+        },
+        {
+            "username": "whereElided",
+            "account": {
+                "owner": "whereElided",
+                "cash": 0,
+                "positions": {}
+            }
+        }
+    ]
+}

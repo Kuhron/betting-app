@@ -1,0 +1,20 @@
+{
+    "trades": [
+        {
+            "amount": 1,
+            "symbol": "FT",
+            "price": 65,
+            "buyOrderNumber": 22,
+            "sellOrderNumber": 12,
+            "timeTraded": "2022-12-31T00:04:24.305Z"
+        },
+        {
+            "amount": 1,
+            "symbol": "FT",
+            "price": 65,
+            "buyOrderNumber": 22,
+            "sellOrderNumber": 18,
+            "timeTraded": "2022-12-31T00:04:24.305Z"
+        }
+    ]
+}
